@@ -910,7 +910,7 @@ by far the largest coefficient.
   We now implement 5-fold cross validation for KNN with the scaled
   numerical variables not given a coefficient of 0 in the lasso
   regression process, and decision tree with all the variables. First we
-  petform the cross-validation using the test set to select the best
+  perform cross-validation using the training set to select the best
   value of k.
 \end{enumerate}
 
@@ -1017,7 +1017,7 @@ Using a pruning tree to maximize accuaracy:
 \begin{Shaded}
 \begin{Highlighting}[]
 \NormalTok{path }\OperatorTok{=}\NormalTok{ cs\_dt.cost\_complexity\_pruning\_path(}
-\NormalTok{    x\_train\_num, }
+\NormalTok{    X\_train, }
 \NormalTok{    y\_train}
 \NormalTok{)}
 \NormalTok{ccp\_alphas, impurities }\OperatorTok{=}\NormalTok{ path.ccp\_alphas, path.impurities}
@@ -1026,10 +1026,10 @@ Using a pruning tree to maximize accuaracy:
 \NormalTok{    clf }\OperatorTok{=}\NormalTok{ DecisionTreeClassifier(}
 \NormalTok{        ccp\_alpha}\OperatorTok{=}\NormalTok{ccp\_alpha}
 \NormalTok{        )}
-\NormalTok{    clf.fit(x\_train\_num, y\_train)}
+\NormalTok{    clf.fit(X\_train, y\_train)}
 \NormalTok{    clfs.append(clf)}
 \NormalTok{depth }\OperatorTok{=}\NormalTok{ [clf.tree\_.max\_depth }\ControlFlowTok{for}\NormalTok{ clf }\KeywordTok{in}\NormalTok{ clfs]}
-\NormalTok{test\_score }\OperatorTok{=}\NormalTok{ [clf.score(x\_test\_num, y\_test) }\ControlFlowTok{for}\NormalTok{ clf }\KeywordTok{in}\NormalTok{ clfs]}
+\NormalTok{test\_score }\OperatorTok{=}\NormalTok{ [clf.score(X\_test, y\_test) }\ControlFlowTok{for}\NormalTok{ clf }\KeywordTok{in}\NormalTok{ clfs]}
 \NormalTok{plt.plot(depth, test\_score)}
 \NormalTok{plt.xlabel(}\StringTok{\textquotesingle{}Depth\textquotesingle{}}\NormalTok{)}
 \NormalTok{plt.ylabel(}\StringTok{\textquotesingle{}Accuracy\textquotesingle{}}\NormalTok{)}
